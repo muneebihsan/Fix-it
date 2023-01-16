@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "951190253789",
+    "project_id": "fix-it0",
+    "storage_bucket": "fix-it0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951190253789:android:1628961ff48428f4546b34",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951190253789-934rj80gk50an5til3t557du14rfhgrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX8ZlixaYqU6EemGpcF4AZnSuuTTMi-WA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951190253789-934rj80gk50an5til3t557du14rfhgrq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
