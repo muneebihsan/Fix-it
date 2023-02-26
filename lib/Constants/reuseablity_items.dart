@@ -1,22 +1,25 @@
-import 'package:fixit/Constants/Constants.dart';
 import 'package:fixit/Screens/location_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fixit/Networking/networking.dart';
 class ServicesContainer extends StatelessWidget {
   final Widget image;
   final String Textimage;
+
   ServicesContainer(this.image, this.Textimage);
-  @override
+
+
+ @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context)=> Dashboard()
-        ));
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard(service: Textimage,serviceWidget: image,)));
       },
       child: Container(
         decoration: BoxDecoration(
-          color:Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -26,12 +29,10 @@ class ServicesContainer extends StatelessWidget {
               offset: Offset(0.7, 0.7),
             )
           ],
-
         ),
         margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
         height: 132,
         width: 120,
-
         child: Column(
           children: <Widget>[
             Container(
@@ -45,7 +46,6 @@ class ServicesContainer extends StatelessWidget {
                 fontWeight: FontWeight.w900,
               ),
             ),
-
           ],
         ),
       ),

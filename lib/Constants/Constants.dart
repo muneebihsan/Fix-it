@@ -8,6 +8,21 @@ const kSendButtonTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
+ double klocationHeightContainer = 300;
+ double krequestHeightContainer = 0;
+ double kserviceHeightContainer = 120;
+
+final kcolorizeColors = [
+  kprimaryColor,
+  Colors.red,
+  Colors.yellow,
+  ksecondaryColor,
+];
+
+const kcolorizeTextStyle = TextStyle(
+  fontSize: 30.0,
+  fontFamily: 'Horizon',
+);
 
 const kMessageTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

@@ -175,7 +175,7 @@ class _Registor_screenState extends State<Registor_screen> {
 
   createAccount() async {
     showDialog(context: context, builder: (BuildContext context){
-      return DialogBoxWidget('Registering , please waiting ...');
+      return DialogBoxWidget('Registering');
     });
     User? newUser = (await _firebase
         .createUserWithEmailAndPassword(

@@ -172,12 +172,13 @@ class _Login_screenState extends State<Login_screen> {
                   height: 20,
                 ),
                 Container(
+                  height: 48,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       padding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 130),
+                      EdgeInsets.symmetric(horizontal: 110),
                       backgroundColor: kprimaryColor,
                     ),
                     onPressed: () {
@@ -195,16 +196,21 @@ class _Login_screenState extends State<Login_screen> {
                 SizedBox(
                   height: 10,
                 ),
-                MaterialButton(
-                  elevation: 0,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Registor_screen()));
-                  },
-                  child: Text(
-                    "Do not have an Account? Register Here.",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: MaterialButton(
+                    elevation: 0,
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Registor_screen()));
+                    },
+                    child: Text(
+                      "Do not have an Account? Register Here.",
+                      style: TextStyle(
+
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+
                     ),
                   ),
                 ),
@@ -222,14 +228,14 @@ class _Login_screenState extends State<Login_screen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return DialogBoxWidget('Authenticating , please wait ...');
+        return DialogBoxWidget('Please wait ...');
       },
     );
     User? newUser = (await _firebase
-            .signInWithEmailAndPassword(
-                email: TextEditingControllerEmaill.text,
-                password: TextEditingControllerPassword.text)
-            .catchError((error) {
+        .signInWithEmailAndPassword(
+        email: TextEditingControllerEmaill.text,
+        password: TextEditingControllerPassword.text)
+        .catchError((error) {
       Navigator.pop(context);
       displayMessage("Error " + error.toString(), context);
     }))

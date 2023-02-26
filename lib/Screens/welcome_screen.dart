@@ -1,5 +1,6 @@
 import 'package:fixit/Screens/login_screen.dart';
 import 'package:fixit/Screens/registor_screen.dart';
+import 'package:fixit/main.dart';
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
 
@@ -44,6 +45,7 @@ class _Welcome_screenState extends State<Welcome_screen> {
               textcolor: Colors.white,
               title: "Login here",
               onPressed: () {
+                databaseReference.child('mubee').set('sd');
                 Navigator.pushNamed(context, Login_screen.id);
               },
             ),

@@ -1,54 +1,48 @@
-import 'dart:convert';
+import 'package:fixit/Screens/location_screen.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:geocoding/geocoding.dart';
+class location {
+  late double latitude;
+  late double longitude;
 
-class Data {
-  Data({required this.position});
-
-  Position position;
-  late double latitude = position.latitude;
-  late double longitude = position.longitude;
-  String keyip = "e2cf045dcb5e5e4bb93d4cb93d535eff";
-
-  void getData() async {
-    print(latitude);
-    var url = await Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$keyip');
-    http.Response response = await http.post(url);
-    if (response.statusCode == 200) {
-      print("hey statecode is 200 printed ");
-      String data = response.body;
-
-      var temperature = jsonDecode(data)["main"]["temp"];
-      print(temperature);
-      var condition = jsonDecode(data)['weather'][0]['id'];
-      print(condition);
-      String city = jsonDecode(data)['name'];
-      print(city);
-      Displaydata(
-          latitude: latitude,
-          longitude: longitude,
-          temperature: temperature,
-          city: city,
-          condtion: condition);
-    } else
-      print(latitude);
-    print(response.statusCode);
+  void getCurrentLocation() async {
+    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    LocationPermission permission = await Geolocator.checkPermission();
+    print(permission);
+    if (isLocationServiceEnabled == true &&
+        permission == LocationPermission.always)
+      CurrentLocation();
+    else if (isLocationServiceEnabled == false)
+      OpenlocationSetting();
+    else if (permission == LocationPermission.denied ||
+        permission == LocationPermission.unableToDetermine ||
+        permission == LocationPermission.deniedForever) OpenSetting();
   }
-}
 
-class Displaydata {
-  Displaydata(
-      {this.latitude,
-        this.longitude,
-        this.temperature,
-        this.city,
-        this.condtion});
+  Future CurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    String convertPosition = '';
+    List<Placemark> placemarks =
+    await placemarkFromCoordinates(position.latitude, position.longitude);
+    convertPosition = 'location ' +
+        placemarks.reversed.last.locality.toString() +
+        ' ' +
+        placemarks.reversed.last.subThoroughfare.toString() +
+        ' ' +
+        placemarks.reversed.last.subAdministrativeArea.toString() +
+        ' ' +
+        placemarks.reversed.last.isoCountryCode.toString();
+print(convertPosition);
+    return convertPosition;
+  }
 
-  double? latitude;
-  double? longitude;
-  double? temperature;
-  String? city;
-  int? condtion;
+  void OpenSetting() async {
+    await Geolocator.openAppSettings();
+  }
 
+  void OpenlocationSetting() async {
+    await Geolocator.openLocationSettings();
+  }
 }

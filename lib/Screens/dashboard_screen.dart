@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
 import 'package:fixit/Constants/reuseablity_items.dart';
 import 'package:fixit/Screens/mainDrawer_screen.dart';
+import 'package:fixit/Networking/networking.dart';
+
 
 class Dashboard_screen extends StatefulWidget {
   const Dashboard_screen({Key? key}) : super(key: key);
@@ -12,8 +14,15 @@ class Dashboard_screen extends StatefulWidget {
 }
 
 class _Dashboard_screenState extends State<Dashboard_screen> {
+  void initState() {
+    super.initState();
+    print(' this is initState dashboard');
+    getLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
+    getLocation();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
@@ -23,7 +32,7 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
             backgroundColor: kprimaryColor,
             centerTitle: true,
             title: Text(
-              "Dashboard",
+              "Home",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
@@ -95,7 +104,7 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       ServicesContainer(
-                          Image.asset('images/butcher.png'), 'butchery'),
+                          Image.asset('images/butcher.png'), 'Butchery'),
                       ServicesContainer(
                           Image.asset('images/waterboiler.png'), 'Geyser'),
                       ServicesContainer(
@@ -148,4 +157,9 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
       ),
     );
   }
+}
+
+void getLocation() async {
+  location().getCurrentLocation();
+
 }

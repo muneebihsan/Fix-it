@@ -9,12 +9,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 /* import 'package:animated_splash_screen/animated_splash_screen.dart';*/
 
-void main()  async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
-DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('user');
+
+DatabaseReference handymanRequest =
+    FirebaseDatabase.instance.ref('Request');
+DatabaseReference databaseReference =
+    FirebaseDatabase.instance.ref().child('user');
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login_screen(),
+      home: Dashboard_screen(),
       routes: {
         Welcome_screen.id: (context) => Welcome_screen(),
         Registor_screen.id: (context) => Registor_screen(),
@@ -63,7 +68,14 @@ class _SplashscreenState extends State<Splashscreen> {
         ),
         nextScreen: Welcome_screen());
   }
-}*/
+}
+{
+  "rules": {
+    ".read": "now < 1674586800000",  // 2023-1-25
+    ".write": "now < 1674586800000",  // 2023-1-25
+  }
+}
+*/
 
 class CustomAnimation extends StatefulWidget {
   const CustomAnimation({Key? key}) : super(key: key);
@@ -85,10 +97,12 @@ class _CustomeAnimationState extends State<CustomAnimation>
       duration: Duration(seconds: 1),
       vsync: this,
     );
-    animation = CurvedAnimation(parent: controller, curve: Curves.fastLinearToSlowEaseIn);
-    animationColor =ColorTween(begin: Colors.indigo, end:Colors.white).animate(controller);
+    animation = CurvedAnimation(
+        parent: controller, curve: Curves.fastLinearToSlowEaseIn);
+    animationColor =
+        ColorTween(begin: Colors.indigo, end: Colors.white).animate(controller);
     controller.forward();
-    controller.addStatusListener((status) { });
+    controller.addStatusListener((status) {});
     controller.addListener(() {
       setState(() {
         print(controller.value);
@@ -102,7 +116,6 @@ class _CustomeAnimationState extends State<CustomAnimation>
 
   @override
   void dispose() {
-
     super.dispose();
     controller.dispose();
   }
@@ -127,7 +140,7 @@ class _CustomeAnimationState extends State<CustomAnimation>
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black54,
-              fontSize: controller.value*15),
+                  fontSize: controller.value * 15),
             ),
           ),
         ],

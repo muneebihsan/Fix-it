@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
-import 'package:fixit/Screens/DrawerScreens/partner_screen.dart';
+import 'package:fixit/Screens/DrawerScreens/verfication_screen.dart';
 import 'package:fixit/Screens/DrawerScreens/inbox_screen.dart';
 import 'package:fixit/Screens/DrawerScreens/notification_screen.dart';
 import 'package:fixit/Screens/DrawerScreens/Review_screen.dart';
@@ -231,7 +231,7 @@ class _MainDrawerState extends State<MainDrawer> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PaternerScreen()));
+                  MaterialPageRoute(builder: (context) => VerficationScreen()));
             },
             child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
