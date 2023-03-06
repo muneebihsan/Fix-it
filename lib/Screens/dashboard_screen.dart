@@ -22,7 +22,6 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
 
   @override
   Widget build(BuildContext context) {
-    getLocation();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(

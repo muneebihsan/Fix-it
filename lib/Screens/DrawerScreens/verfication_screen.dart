@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
 import 'package:fixit/Screens/partnerDashboad_screen.dart';
-
+import 'package:fixit/Models/pickImage.dart';
 class VerficationScreen extends StatefulWidget {
   @override
   State<VerficationScreen> createState() => _VerficationScreenState();
@@ -27,7 +27,9 @@ class _VerficationScreenState extends State<VerficationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: ksecondaryColor,
@@ -40,73 +42,73 @@ class _VerficationScreenState extends State<VerficationScreen> {
           centerTitle: true,
           title: Text("Verification"),
         ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 148,
-            ),
-            verficationContainerWidget(
-                iconData: Icons.add_a_photo, text: ' Provide us your selfie'),
-            SizedBox(
-              height: 25,
-            ),
-            verficationContainerWidget(
-                iconData: Icons.add_card, text: 'Take a picture of Cnic'),
-            SizedBox(
-              height: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(23),
-                    border: Border.all(color: kprimaryColor, width: 2.5)),
-                child: DropdownButton(
-                  enableFeedback: true,
-                  menuMaxHeight: 320,
-                  value: valueChoose,
-                  items: itemList.map((valueitem) {
-                    return DropdownMenuItem(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 148,
+              ),
+              verficationContainerWidget(
+                  iconData: Icons.add_a_photo, text: ' Provide us your selfie'),
+              SizedBox(
+                height: 25,
+              ),
+              verficationContainerWidget(
+                  iconData: Icons.add_card, text: 'Take a picture of Cnic'),
+              SizedBox(
+                height: 25,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(23),
+                      border: Border.all(color: kprimaryColor, width: 2.5)),
+                  child: DropdownButton(
+                    enableFeedback: true,
+                    menuMaxHeight: 320,
+                    value: valueChoose,
+                    items: itemList.map((valueitem) {
+                      return DropdownMenuItem(
 
-                        value: valueitem, child: Center(child: Text(valueitem)));
-                  }).toList(),
-                  isExpanded: true,
-                  iconEnabledColor: kprimaryColor,
-                  onChanged: (newvalue) {
-                    setState(() {
-                      valueChoose = newvalue.toString();
-                    });
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 70,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: Container(
-                width: double.infinity,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: kprimaryColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kprimaryColor,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PartnerDashboard(valueChoose)));
+                          value: valueitem, child: Center(child: Text(valueitem)));
+                    }).toList(),
+                    isExpanded: true,
+                    iconEnabledColor: kprimaryColor,
+                    onChanged: (newvalue) {
+                      setState(() {
+                        valueChoose = newvalue.toString();
+                      });
                     },
-                    child: Text("Submit")),
+                  ),
+                ),
               ),
-            )
-          ],
+              SizedBox(
+                height: 70,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: kprimaryColor,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kprimaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>PartnerDashboard(valueChoose,)), (route) => false);
+                      },
+                      child: Text("Submit")),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -122,7 +124,9 @@ class verficationContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        pickuploadingImage();
+      },
       child: Container(
         width: double.infinity,
         height: 55,
@@ -161,4 +165,6 @@ class verficationContainerWidget extends StatelessWidget {
       ),
     );
   }
+
 }
+

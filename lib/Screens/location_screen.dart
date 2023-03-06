@@ -1,3 +1,5 @@
+import 'package:fixit/Screens/login_screen.dart';
+import 'package:fixit/main.dart';
 import 'dart:async';
 import 'package:fixit/Networking/networking.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +8,20 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fixit/AllWidegets/divider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class Dashboard extends StatefulWidget {
   static String id = "locationScreen";
   final String service;
   final Widget serviceWidget;
+final String name;
 
-
-  Dashboard({required this.service, required this.serviceWidget});
+  Dashboard({required this.service, required this.serviceWidget,required this.name});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
+final requestid =DateTime.now().microsecondsSinceEpoch;
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
@@ -31,6 +35,8 @@ class _DashboardState extends State<Dashboard>
   @override
 
   Widget build(BuildContext context) {
+    String user = databaseReference.child('uid').child('name').toString();
+    print('Muneeb is here' + user);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
@@ -168,12 +174,14 @@ class _DashboardState extends State<Dashboard>
                             height: 50,
                             width: 300,
                             child: ElevatedButton(
+
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.grey,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   )),
                               onPressed: () {
+                                serviceRequest();
                                 displayContainer();
                               },
                               child: Text(
@@ -255,6 +263,8 @@ class _DashboardState extends State<Dashboard>
                                     color: ksecondaryColor, width: 2.0)),
                             child: GestureDetector(
                               onTap: (){
+                                handymanRequest.child(requestid.toString()).remove();
+                                displayMessage('Cancling your request...', context);
                                 displayContainer();
                               },
                               child: Icon(
@@ -339,11 +349,24 @@ class _DashboardState extends State<Dashboard>
         kserviceHeightContainer=120;
         krequestHeightContainer = 0;
 
-      }
+  }
     });
   }
-  DatabaseReference handymanRequest = FirebaseDatabase.instance.ref('Request');
-  serviceRequest(){
 
+  serviceRequest() async {
+
+handymanRequest.child(requestid.toString()).set({
+  "id": requestid.toString(),
+"name": FirebaseAuth.instance.currentUser!.email,
+  'service': widget.service,
+  'location': await  location().CurrentLocation(),
+
+
+
+}).then((value){
+  displayMessage('Your request has been sending...', context);
+}).onError((error, stackTrace) {
+  displayMessage('Some error occur', context);
+});
   }
 }

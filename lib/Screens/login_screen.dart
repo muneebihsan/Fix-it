@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/Screens/registor_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fixit/AllWidegets/dialogboxWidget.dart';
-
 class Login_screen extends StatefulWidget {
   const Login_screen({Key? key}) : super(key: key);
   static String id = 'Login_screen';

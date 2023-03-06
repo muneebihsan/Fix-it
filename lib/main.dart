@@ -4,9 +4,9 @@ import 'package:fixit/Screens/welcome_screen.dart';
 import 'package:fixit/Screens/registor_screen.dart';
 import 'package:fixit/Screens/login_screen.dart';
 import 'package:fixit/Screens/dashboard_screen.dart';
-import 'package:fixit/Screens/location_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 /* import 'package:animated_splash_screen/animated_splash_screen.dart';*/
 
 void main() async {
@@ -15,8 +15,8 @@ void main() async {
   runApp(const MyApp());
 }
 
-DatabaseReference handymanRequest =
-    FirebaseDatabase.instance.ref('Request');
+bool loading = false;
+DatabaseReference handymanRequest = FirebaseDatabase.instance.ref('Request');
 DatabaseReference databaseReference =
     FirebaseDatabase.instance.ref().child('user');
 
@@ -27,16 +27,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Dashboard_screen(),
+      home: CustomAnimation(),
       routes: {
         Welcome_screen.id: (context) => Welcome_screen(),
         Registor_screen.id: (context) => Registor_screen(),
         Login_screen.id: (context) => Login_screen(),
         Dashboard_screen.id: (context) => Dashboard_screen(),
-        Dashboard.id: (context) => Dashboard_screen(),
       },
     );
   }
+
+
 }
 
 /*class Splashscreen extends StatefulWidget {
@@ -108,10 +109,8 @@ class _CustomeAnimationState extends State<CustomAnimation>
         print(controller.value);
       });
     });
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Welcome_screen.id, (route) => false);
-    });
+
+  Login(context);
   }
 
   @override
@@ -146,5 +145,22 @@ class _CustomeAnimationState extends State<CustomAnimation>
         ],
       ),
     );
+
   }
+  Login(BuildContext context) {
+    final auth = FirebaseAuth.instance.currentUser;
+    if (auth != null) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, Dashboard_screen.id, (route) => false);
+
+      });
+    } else
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, Welcome_screen.id, (route) => false);
+
+      });
+  }
+
 }

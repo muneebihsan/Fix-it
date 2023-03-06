@@ -1,12 +1,12 @@
 import 'package:fixit/Screens/location_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:fixit/Networking/networking.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 class ServicesContainer extends StatelessWidget {
   final Widget image;
   final String Textimage;
-
+  final  currentuid =  FirebaseAuth.instance.currentUser!.uid;
+  final ref =  FirebaseDatabase.instance.ref().child('uid').child('name').toString();
   ServicesContainer(this.image, this.Textimage);
 
 
@@ -15,7 +15,7 @@ class ServicesContainer extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard(service: Textimage,serviceWidget: image,)));
+            context, MaterialPageRoute(builder: (context) => Dashboard(service: Textimage,serviceWidget: image,name: ref)));
       },
       child: Container(
         decoration: BoxDecoration(

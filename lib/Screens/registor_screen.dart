@@ -192,9 +192,10 @@ class _Registor_screenState extends State<Registor_screen> {
       };
 
       databaseReference.child(newUser.uid).set(UserDataMap);
-      displayMessage("Congratulations, You account has been Created", context);
       Navigator.pushNamedAndRemoveUntil(
           context, Login_screen.id, (route) => false);
+      displayMessage("Congratulations, You account has been Created", context);
+
     } else {
       Navigator.pop(context);
       displayMessage("Opss, New user not has been Created", context);

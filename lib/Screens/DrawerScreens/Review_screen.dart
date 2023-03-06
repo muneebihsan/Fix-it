@@ -6,6 +6,7 @@ class Review_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: ksecondaryColor,
@@ -17,7 +18,12 @@ class Review_screen extends StatelessWidget {
           centerTitle: true,
           title: Text("Reviews"),
         ),
-      ),
+      body: Container(
+        child:Center(child: Text('No review yet!',style: TextStyle(
+          fontSize: 16,
+          color: Colors.black,
+        ),))
+      ),),
     );
   }
 }

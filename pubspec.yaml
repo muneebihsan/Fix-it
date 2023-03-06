@@ -48,7 +48,8 @@ dependencies:
   http: ^0.13.5
   url_launcher: ^6.1.7
   animated_text_kit: ^4.2.2
-
+  image_picker: ^0.8.6+4
+  firebase_storage: ^11.0.14
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +81,7 @@ flutter:
     - images/ac.png
     - images/electrician.png
     - images/plumber.png
-    - images/Profile_pic.jpeg
+    - images/Profile_pic.jpg
     - images/butcher.png
     - images/camera.png
     - images/carpenter.png
@@ -102,6 +103,8 @@ flutter:
     - images/Partner_background.jpeg
     - images/partnermessage.png
     - images/requestservice.png
+    - images/notification.jpg
+    - images/Profile_pic2.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
