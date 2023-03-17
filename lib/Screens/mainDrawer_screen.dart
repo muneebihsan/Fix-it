@@ -9,7 +9,7 @@ import 'package:fixit/Screens/DrawerScreens/Review_screen.dart';
 import 'package:fixit/Screens/DrawerScreens/complain_screen.dart';
 import "package:fixit/Screens/DrawerScreens/aboutus_screen.dart";
 import 'package:fixit/Screens/login_screen.dart';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -126,11 +126,26 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login_screen()),
-                  (route) => false);
+              AwesomeDialog(
+                context: context,
+                title: 'Logout',
+                descTextStyle: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+                desc: "Are your sure you want to log out?🤔 ",
+                dialogType: DialogType.warning,
+                showCloseIcon: true,
+                btnCancelOnPress: (){},
+                btnOkText: 'Logout😏',
+                btnOkOnPress: (){
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login_screen()),
+                          (route) => false);
+                },
+              ).show();
+
             },
             child: ListTile(
               leading: Icon(

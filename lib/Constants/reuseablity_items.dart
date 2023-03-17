@@ -32,7 +32,7 @@ class ServicesContainer extends StatelessWidget {
         ),
         margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
         height: 132,
-        width: 120,
+        width: 110,
         child: Column(
           children: <Widget>[
             Container(

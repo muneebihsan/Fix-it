@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
+import 'package:fixit/AllWidegets/chatbox.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -11,50 +12,19 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                //Implement logout functionality
-              }),
-        ],
-        title: Text('Chat'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            }, icon: const Icon(Icons.arrow_back_ios_sharp)),
+        title: const Text('Chat'),
         backgroundColor: kprimaryColor,
       ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              decoration: kMessageContainerDecoration,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        //Do something with the user input.
-                      },
-                      decoration: kMessageTextFieldDecoration,
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      //Implement send functionality.
-                    },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body:Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+        child: Chatbox(),
+
+      )
     );
   }
 }

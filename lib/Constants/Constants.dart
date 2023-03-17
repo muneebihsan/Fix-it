@@ -51,3 +51,29 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kSearchDecoration = InputDecoration(
+
+enabledBorder: OutlineInputBorder(
+borderSide: BorderSide(
+color: kprimaryColor,
+width: 2,
+),
+borderRadius: BorderRadius.all(
+Radius.circular(10.0),
+),
+),
+focusedBorder: OutlineInputBorder(
+borderSide:
+BorderSide(color: kprimaryColor, width: 2.0),
+borderRadius: BorderRadius.all(
+Radius.circular(32.0),
+),
+),
+hintText: 'Search for services',
+prefixIcon: Icon(
+Icons.search,
+color: kprimaryColor,
+),
+
+);

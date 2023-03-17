@@ -4,7 +4,6 @@ import 'package:fixit/Constants/reuseablity_items.dart';
 import 'package:fixit/Screens/mainDrawer_screen.dart';
 import 'package:fixit/Networking/networking.dart';
 
-
 class Dashboard_screen extends StatefulWidget {
   const Dashboard_screen({Key? key}) : super(key: key);
   static String id = 'Dashboard_screen';
@@ -17,7 +16,7 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
   void initState() {
     super.initState();
     print(' this is initState dashboard');
-    getLocation();
+    location(context).getCurrentLocation();
   }
 
   @override
@@ -137,8 +136,7 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(7.0),
+                FittedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -146,6 +144,11 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                           'Water Filter'),
                       ServicesContainer(
                           Image.asset('images/sofa.png'), 'Upholstery'),
+                      Container(
+                        width: 105,
+                        height: 110,
+                        margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                      ),
                     ],
                   ),
                 ),
@@ -159,6 +162,5 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
 }
 
 void getLocation() async {
-  location().getCurrentLocation();
 
 }

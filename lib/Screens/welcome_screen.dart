@@ -4,6 +4,7 @@ import 'package:fixit/main.dart';
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
 
+
 class Welcome_screen extends StatefulWidget {
   const Welcome_screen({Key? key}) : super(key: key);
   static String id = "Welcome_screen";
@@ -57,6 +58,7 @@ class _Welcome_screenState extends State<Welcome_screen> {
                 Navigator.pushNamed(context, Registor_screen.id);
               },
             ),
+
           ],
         ),
       ),

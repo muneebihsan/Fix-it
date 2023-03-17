@@ -5,9 +5,12 @@ import 'package:fixit/Screens/Requestservices_screen.dart';
 import 'package:fixit/Screens/chat_screen.dart';
 import 'package:fixit/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 class PartnerDashboard extends StatefulWidget {
   final String category;
-PartnerDashboard(this.category);
+
+  PartnerDashboard(this.category);
+
   @override
   State<PartnerDashboard> createState() => _PartnerDashboardState();
 }
@@ -24,7 +27,25 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
           backgroundColor: ksecondaryColor,
           leading: IconButton(
               onPressed: () {
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard_screen()), (route) => false);
+                AwesomeDialog(
+                  context: context,
+                  title: 'Logout as a partner',
+                  descTextStyle: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  dialogType: DialogType.warning,
+                  showCloseIcon: true,
+                  btnCancelOnPress: (){},
+                  desc: 'Are you sure?🤨',
+                  btnOkText: "Yes",
+                  btnOkOnPress: (){
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard_screen()),
+                            (route) => false);
+                  },
+                ).show();
+
               },
               iconSize: 30,
               icon: Icon(Icons.logout)),
@@ -40,18 +61,18 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                     fit: BoxFit.cover,
                     image: AssetImage('images/Partner_background.jpeg'))),
             child: StreamBuilder<Object>(
-              stream: databaseReference
-                  .child(FirebaseAuth.instance.currentUser!.uid.toString())
-                  .onValue,
-              builder: (context,AsyncSnapshot snapshot) {
-                if(!snapshot.hasData)
-                  {
+                stream: databaseReference
+                    .child(FirebaseAuth.instance.currentUser!.uid.toString())
+                    .onValue,
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData) {
                     return Column(
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(top: 61),
                           child: CircleAvatar(
-                            backgroundImage:NetworkImage('https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg'),
+                            backgroundImage: NetworkImage(
+                                'https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg'),
                             radius: 68,
                           ),
                         ),
@@ -60,20 +81,20 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         ),
                         Center(
                             child: Text(
-                              " ",
-                              style: TextStyle(color: Colors.white, fontSize: 26),
-                            )),
+                          " ",
+                          style: TextStyle(color: Colors.white, fontSize: 26),
+                        )),
                         SizedBox(
                           height: 10,
                         ),
                         Center(
                             child: Text(
-                              " ",
-                              style: TextStyle(
-                                  color: kprimaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                          " ",
+                          style: TextStyle(
+                              color: kprimaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
                         SizedBox(
                           height: 20,
                         ),
@@ -84,7 +105,8 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                             children: [
                               Text(
                                 "Active",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                               buildSwitch(),
                             ],
@@ -100,11 +122,13 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                             children: [
                               Text(
                                 "Category",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                               Text(
                                 "${widget.category}",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                             ],
                           ),
@@ -115,25 +139,30 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-
                             GestureDetector(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatScreen()));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white30,
                                   borderRadius: BorderRadius.circular(12),
-
                                 ),
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 height: 132,
                                 width: 120,
                                 child: Column(
                                   children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 25, 0, 20),
-                                      child: Image.asset('images/partnermessage.png'),
+                                    GestureDetector(
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 25, 0, 20),
+                                        child: Image.asset(
+                                            'images/partnermessage.png'),
+                                      ),
                                     ),
                                     Text(
                                       "Message",
@@ -147,15 +176,17 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => request_screen()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            request_screen()));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white30,
                                   borderRadius: BorderRadius.circular(12),
-
                                 ),
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 height: 132,
@@ -164,7 +195,8 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                                   children: <Widget>[
                                     Container(
                                       margin: EdgeInsets.fromLTRB(0, 25, 0, 20),
-                                      child: Image.asset('images/requestservice.png'),
+                                      child: Image.asset(
+                                          'images/requestservice.png'),
                                     ),
                                     Text(
                                       "Request",
@@ -181,17 +213,15 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         ),
                       ],
                     );
-                  }
-                else if(snapshot.hasData)
-
-                  {
-                    Map<dynamic,dynamic> map = snapshot.data.snapshot.value;
+                  } else if (snapshot.hasData) {
+                    Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
                     return Column(
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(top: 61),
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('images/Profile_pic2.jpg'),
+                            backgroundImage: NetworkImage(
+                                'https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg'),
                             radius: 78,
                           ),
                         ),
@@ -200,20 +230,20 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         ),
                         Center(
                             child: Text(
-                              map['name'],
-                              style: TextStyle(color: Colors.white, fontSize: 26),
-                            )),
+                          map['name'],
+                          style: TextStyle(color: Colors.white, fontSize: 26),
+                        )),
                         SizedBox(
                           height: 10,
                         ),
                         Center(
                             child: Text(
-                              map['email'],
-                              style: TextStyle(
-                                  color: kprimaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                          map['email'],
+                          style: TextStyle(
+                              color: kprimaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
                         SizedBox(
                           height: 20,
                         ),
@@ -224,7 +254,8 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                             children: [
                               Text(
                                 "Active",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                               buildSwitch(),
                             ],
@@ -240,11 +271,13 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                             children: [
                               Text(
                                 "Category",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                               Text(
                                 "${widget.category}",
-                                style: TextStyle(color: Colors.white, fontSize: 23),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 23),
                               ),
                             ],
                           ),
@@ -255,16 +288,17 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-
                             GestureDetector(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatScreen()));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white30,
                                   borderRadius: BorderRadius.circular(12),
-
                                 ),
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 height: 132,
@@ -273,7 +307,8 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                                   children: <Widget>[
                                     Container(
                                       margin: EdgeInsets.fromLTRB(0, 25, 0, 20),
-                                      child: Image.asset('images/partnermessage.png'),
+                                      child: Image.asset(
+                                          'images/partnermessage.png'),
                                     ),
                                     Text(
                                       "Message",
@@ -287,15 +322,17 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => request_screen()));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            request_screen()));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white30,
                                   borderRadius: BorderRadius.circular(12),
-
                                 ),
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 height: 132,
@@ -304,7 +341,8 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                                   children: <Widget>[
                                     Container(
                                       margin: EdgeInsets.fromLTRB(0, 25, 0, 20),
-                                      child: Image.asset('images/requestservice.png'),
+                                      child: Image.asset(
+                                          'images/requestservice.png'),
                                     ),
                                     Text(
                                       "Request",
@@ -321,14 +359,9 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                         ),
                       ],
                     );
-                  }
-                else
-
+                  } else
                     return Center(child: Text('Something Wrong '));
-
-
-              }
-            ),
+                }),
           ),
         ),
       ),

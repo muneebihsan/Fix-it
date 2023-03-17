@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fixit/Constants/Constants.dart';
 import 'package:fixit/Screens/partnerDashboad_screen.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fixit/Models/pickImage.dart';
 class VerficationScreen extends StatefulWidget {
   @override
@@ -102,7 +103,20 @@ class _VerficationScreenState extends State<VerficationScreen> {
                         backgroundColor: kprimaryColor,
                       ),
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>PartnerDashboard(valueChoose,)), (route) => false);
+                        AwesomeDialog(
+                          context: context,
+                          title: 'Confirmation',
+                          desc: "Are you sure?😉 ",
+                          dialogType: DialogType.question,
+                          showCloseIcon: true,
+                          btnCancelOnPress: (){},
+                          btnCancelIcon: null,
+                          btnOkText: 'Create it 😍 ',
+                          btnOkOnPress: (){
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>PartnerDashboard(valueChoose,)), (route) => false);
+                          },
+                        ).show();
+
                       },
                       child: Text("Submit")),
                 ),
