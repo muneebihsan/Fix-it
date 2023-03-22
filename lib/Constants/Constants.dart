@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 String kmapKey = 'AIzaSyBX8ZlixaYqU6EemGpcF4AZnSuuTTMi-WA';
+
 const Color kprimaryColor = Colors.indigo;
 const Color ksecondaryColor = Colors.indigoAccent;
 

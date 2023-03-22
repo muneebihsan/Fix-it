@@ -51,6 +51,7 @@ dependencies:
   image_picker: ^0.8.6+4
   firebase_storage: ^11.0.14
   awesome_dialog: ^3.0.2
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +108,7 @@ flutter:
     - images/notification.jpg
     - images/Profile_pic2.jpg
     - images/Profile_pic3.jpeg
+    - images/tick.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

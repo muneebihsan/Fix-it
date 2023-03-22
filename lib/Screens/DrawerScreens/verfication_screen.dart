@@ -8,12 +8,13 @@ class VerficationScreen extends StatefulWidget {
   State<VerficationScreen> createState() => _VerficationScreenState();
 }
 
+
+
 class _VerficationScreenState extends State<VerficationScreen> {
   String valueChoose = 'Ac Repair';
-
   List itemList = [
     'Ac Repair',
-    'Electricain',
+    'Electrician',
     'Plumber',
     'butchery',
     'Geyser',
@@ -28,7 +29,6 @@ class _VerficationScreenState extends State<VerficationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -73,8 +73,8 @@ class _VerficationScreenState extends State<VerficationScreen> {
                     value: valueChoose,
                     items: itemList.map((valueitem) {
                       return DropdownMenuItem(
-
-                          value: valueitem, child: Center(child: Text(valueitem)));
+                          value: valueitem,
+                          child: Center(child: Text(valueitem)));
                     }).toList(),
                     isExpanded: true,
                     iconEnabledColor: kprimaryColor,
@@ -109,14 +109,19 @@ class _VerficationScreenState extends State<VerficationScreen> {
                           desc: "Are you sure?😉 ",
                           dialogType: DialogType.question,
                           showCloseIcon: true,
-                          btnCancelOnPress: (){},
+                          btnCancelOnPress: () {},
                           btnCancelIcon: null,
                           btnOkText: 'Create it 😍 ',
-                          btnOkOnPress: (){
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>PartnerDashboard(valueChoose,)), (route) => false);
+                          btnOkOnPress: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PartnerDashboard(
+                                          valueChoose,
+                                        )),
+                                (route) => false);
                           },
                         ).show();
-
                       },
                       child: Text("Submit")),
                 ),
@@ -128,6 +133,7 @@ class _VerficationScreenState extends State<VerficationScreen> {
     );
   }
 }
+
 
 class verficationContainerWidget extends StatelessWidget {
   final IconData? iconData;
@@ -179,6 +185,4 @@ class verficationContainerWidget extends StatelessWidget {
       ),
     );
   }
-
 }
-

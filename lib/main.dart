@@ -7,18 +7,21 @@ import 'package:fixit/Screens/dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-/* import 'package:animated_splash_screen/animated_splash_screen.dart';*/
 
+/* import 'package:animated_splash_screen/animated_splash_screen.dart';*/
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-bool loading = false;
-DatabaseReference handymanRequest = FirebaseDatabase.instance.ref('Request');
-DatabaseReference databaseReference =
-    FirebaseDatabase.instance.ref().child('user');
+String partnercategory = "";
+bool task = false;
+FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseDatabase database = FirebaseDatabase.instance;
+DatabaseReference handymanRequest = database.ref('Request');
+DatabaseReference databaseReference = database.ref().child('user');
+DatabaseReference partnerDatabase = database.ref().child('partner');
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,8 +39,6 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-
-
 }
 
 /*class Splashscreen extends StatefulWidget {
@@ -110,7 +111,7 @@ class _CustomeAnimationState extends State<CustomAnimation>
       });
     });
 
-  Login(context);
+    Login(context);
   }
 
   @override
@@ -145,22 +146,19 @@ class _CustomeAnimationState extends State<CustomAnimation>
         ],
       ),
     );
-
   }
+
   Login(BuildContext context) {
     final auth = FirebaseAuth.instance.currentUser;
     if (auth != null) {
       Timer(Duration(seconds: 3), () {
         Navigator.pushNamedAndRemoveUntil(
             context, Dashboard_screen.id, (route) => false);
-
       });
     } else
       Timer(Duration(seconds: 3), () {
         Navigator.pushNamedAndRemoveUntil(
             context, Welcome_screen.id, (route) => false);
-
       });
   }
-
 }

@@ -7,7 +7,7 @@ import 'package:fixit/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 class PartnerDashboard extends StatefulWidget {
-  final String category;
+   final String category;
 
   PartnerDashboard(this.category);
 
@@ -181,7 +181,7 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            request_screen()));
+                                            request_screen(widget.category)));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -327,7 +327,7 @@ class _PartnerDashboardState extends State<PartnerDashboard> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            request_screen()));
+                                            request_screen(widget.category)));
                               },
                               child: Container(
                                 decoration: BoxDecoration(

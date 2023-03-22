@@ -11,7 +11,7 @@ import "package:fixit/Screens/DrawerScreens/aboutus_screen.dart";
 import 'package:fixit/Screens/login_screen.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:fixit/AllWidegets/requestCheckWidget.dart';
 class MainDrawer extends StatefulWidget {
 
 
@@ -39,7 +39,8 @@ class _MainDrawerState extends State<MainDrawer> {
             width: double.infinity,
             color: Colors.indigo,
             child: Stack(children: [
-              profile_screen(),
+profile_screen()
+
             ]),
           ),
           GestureDetector(

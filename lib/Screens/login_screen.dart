@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/Screens/registor_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fixit/AllWidegets/dialogboxWidget.dart';
+
 class Login_screen extends StatefulWidget {
   const Login_screen({Key? key}) : super(key: key);
   static String id = 'Login_screen';
@@ -176,8 +177,7 @@ class _Login_screenState extends State<Login_screen> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 110),
+                      padding: EdgeInsets.symmetric(horizontal: 110),
                       backgroundColor: kprimaryColor,
                     ),
                     onPressed: () {
@@ -200,16 +200,17 @@ class _Login_screenState extends State<Login_screen> {
                   child: MaterialButton(
                     elevation: 0,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Registor_screen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Registor_screen()));
                     },
                     child: Text(
                       "Do not have an Account? Register Here.",
                       style: TextStyle(
-
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
-
                     ),
                   ),
                 ),
@@ -231,10 +232,10 @@ class _Login_screenState extends State<Login_screen> {
       },
     );
     User? newUser = (await _firebase
-        .signInWithEmailAndPassword(
-        email: TextEditingControllerEmaill.text,
-        password: TextEditingControllerPassword.text)
-        .catchError((error) {
+            .signInWithEmailAndPassword(
+                email: TextEditingControllerEmaill.text,
+                password: TextEditingControllerPassword.text)
+            .catchError((error) {
       Navigator.pop(context);
       displayMessage("Error " + error.toString(), context);
     }))

@@ -1,13 +1,14 @@
+import 'package:fixit/Provider/AppData.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class location {
   final BuildContext context;
 
-  late double latitude;
-  late double longitude;
+
   location( this.context);
   void getCurrentLocation() async {
     bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -15,7 +16,7 @@ class location {
     print(permission);
     if (isLocationServiceEnabled == true &&
         permission == LocationPermission.always)
-      CurrentLocation();
+      userCurrentLocation().CurrentLocation();
     else if (isLocationServiceEnabled == false)
       AwesomeDialog(
 
@@ -44,24 +45,6 @@ class location {
       ).show();
   }
 
-  Future CurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    String convertPosition = '';
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    convertPosition = 'location ' +
-        placemarks.reversed.last.locality.toString() +
-        ' ' +
-        placemarks.reversed.last.subThoroughfare.toString() +
-        ' ' +
-        placemarks.reversed.last.subAdministrativeArea.toString() +
-        ' ' +
-        placemarks.reversed.last.isoCountryCode.toString();
-    print(convertPosition);
-    return convertPosition;
-  }
-
   void OpenSetting() async {
         await Geolocator.openAppSettings();
 
@@ -75,7 +58,27 @@ class location {
 
   }
 }
-
+class userCurrentLocation{
+  late double latitude;
+  late double longitude;
+  Future CurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    String convertPosition = '';
+    List<Placemark> placemarks =
+    await placemarkFromCoordinates(position.latitude, position.longitude);
+    convertPosition = 'location ' +
+        placemarks.reversed.last.locality.toString() +
+        ' ' +
+        placemarks.reversed.last.subThoroughfare.toString() +
+        ' ' +
+        placemarks.reversed.last.subAdministrativeArea.toString() +
+        ' ' +
+        placemarks.reversed.last.isoCountryCode.toString();
+    print(convertPosition);
+    return convertPosition;
+  }
+}
 /*
 class dialogbox extends StatefulWidget {
   const dialogbox({Key? key}) : super(key: key);

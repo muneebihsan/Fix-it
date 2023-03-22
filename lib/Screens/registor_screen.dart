@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fixit/AllWidegets/dialogboxWidget.dart';
 import 'package:fixit/Screens/login_screen.dart';
 import 'package:fixit/main.dart';
+
 class Registor_screen extends StatefulWidget {
   const Registor_screen({Key? key}) : super(key: key);
   static String id = "Registor_screen";
@@ -73,7 +74,7 @@ class _Registor_screenState extends State<Registor_screen> {
                         controller: TextEditingControllerName,
                         onChanged: (value) {
                           _formKey.currentState?.validate();
-                          },
+                        },
                         decoration: const InputDecoration(
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: kprimaryColor)),
@@ -152,11 +153,10 @@ class _Registor_screenState extends State<Registor_screen> {
                         if (TextEditingControllerName.text.length < 4) {
                           displayMessage(
                               "Name must be at least 4 Character", context);
-                        } else if (TextEditingControllerName.text.length>12 ){
+                        } else if (TextEditingControllerName.text.length > 12) {
                           displayMessage(
                               "Name must be at max 8 Character", context);
-                        }
-                        else
+                        } else
                           createAccount();
                       },
                       textColor: Colors.white,
@@ -171,19 +171,23 @@ class _Registor_screenState extends State<Registor_screen> {
       ),
     ));
   }
+
   final FirebaseAuth _firebase = FirebaseAuth.instance;
 
   createAccount() async {
-    showDialog(context: context, builder: (BuildContext context){
-      return DialogBoxWidget('Registering');
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return DialogBoxWidget('Registering');
+        });
     User? newUser = (await _firebase
-        .createUserWithEmailAndPassword(
-        email: TextEditingControllerEmaill.text,
-        password: TextEditingControllerPassword.text)
-        .catchError((error) {
+            .createUserWithEmailAndPassword(
+                email: TextEditingControllerEmaill.text,
+                password: TextEditingControllerPassword.text)
+            .catchError((error) {
       displayMessage("Error" + error.toString(), context);
-    })).user;
+    }))
+        .user;
     if (newUser != null) {
       Map UserDataMap = {
         "name": TextEditingControllerName.text.trim(),
@@ -195,13 +199,13 @@ class _Registor_screenState extends State<Registor_screen> {
       Navigator.pushNamedAndRemoveUntil(
           context, Login_screen.id, (route) => false);
       displayMessage("Congratulations, You account has been Created", context);
-
     } else {
       Navigator.pop(context);
       displayMessage("Opss, New user not has been Created", context);
     }
   }
 }
+
 displayMessage(String message, BuildContext context) {
   Fluttertoast.showToast(msg: message);
 }

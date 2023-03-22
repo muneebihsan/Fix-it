@@ -1,4 +1,4 @@
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:fixit/Screens/login_screen.dart';
 import 'package:fixit/main.dart';
 import 'dart:async';
@@ -10,8 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fixit/AllWidegets/divider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-
+import 'package:fixit/AllWidegets/requestCheckWidget.dart';
 class Dashboard extends StatefulWidget {
   static String id = "locationScreen";
   final String service;
@@ -25,13 +24,17 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-final requestid = DateTime.now().microsecondsSinceEpoch;
+
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     location(context).getCurrentLocation();
+    userCurrentLocation().CurrentLocation();
+    setState(() {
+      task=false;
+    });
   }
 
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
@@ -42,10 +45,10 @@ class _DashboardState extends State<Dashboard>
   );
   bool request = false;
 
+
   @override
   Widget build(BuildContext context) {
-    String user = databaseReference.child('uid').child('name').toString();
-    print('Muneeb is here' + user);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SafeArea(
@@ -191,36 +194,29 @@ class _DashboardState extends State<Dashboard>
                               onPressed: () {
                                 serviceRequest();
                                 displayContainer();
-                                Timer(Duration(seconds: 10), () async {
-                                  bool checkrequest = true;
-                                  print("this is check bro $checkrequest ");
-                                  if (checkrequest == true) {
-                                    displayContainer();
-                                    AwesomeDialog(
-                                      context: context,
-                                      title: 'Congratulataion',
-                                      desc: "Fixer accpet your request ",
-                                      dialogType: DialogType.success,
-                                      btnOkText: 'Okay 😍 ',
-                                      btnOkOnPress: () {},
-                                    ).show();
-                                  } else  if (checkrequest ==false){
-                                    displayContainer();
-                                    AwesomeDialog(
-                                      context: context,
-                                      title: 'Opss',
-                                      desc: " No fixer is available right now",
-                                      dialogType: DialogType.error,
-                                      btnOkColor: Colors.red,
-                                      btnOkText: 'Okay 🙄 ',
-                                      btnOkOnPress: () {
-                                        handymanRequest
-                                            .child(requestid.toString())
-                                            .remove();
-                                      },
-                                    ).show();
-                                  }
+                                setState(() {
+                                  task=true;
                                 });
+                                /*Timer(Duration(seconds: 10), () async {
+                                  if(request =false)
+                                  {
+                                  displayContainer();
+                                  AwesomeDialog(
+                                  context: context,
+                                  title: 'Opss',
+                                  desc: " No fixer is available right now",
+                                  dialogType: DialogType.error,
+                                  btnOkColor: Colors.red,
+                                  btnOkText: 'Okay 🙄 ',
+                                  btnOkOnPress: () {
+
+                                  handymanRequest
+                                      .child(requestid.toString())
+                                      .remove();
+                                  },
+                                  ).show();
+                                  }
+                                });*/
                               },
                               child: Text(
                                 'Create Task!',
@@ -301,8 +297,11 @@ class _DashboardState extends State<Dashboard>
                                     color: ksecondaryColor, width: 2.0)),
                             child: GestureDetector(
                               onTap: () {
+                                setState(() {
+                                  task=false;
+                                });
                                 handymanRequest
-                                    .child(requestid.toString())
+                                    .child(uid)
                                     .remove();
                                 displayMessage(
                                     'Cancling your request...', context);
@@ -366,6 +365,7 @@ class _DashboardState extends State<Dashboard>
                   ),
                 ),
               ),
+              task ? RequestCheckWidget(): Container(),
             ],
           ),
         ),
@@ -374,12 +374,12 @@ class _DashboardState extends State<Dashboard>
   }
 
   void userLocation() async {
-    LatLng currentUserPosition = await location(context).CurrentLocation();
+    LatLng currentUserPosition = await userCurrentLocation().CurrentLocation();
     CameraPosition newCameraPosition =
-        CameraPosition(target: currentUserPosition, zoom: 0);
+    CameraPosition(target: currentUserPosition, zoom: 0);
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
-    Position position = await location(context).CurrentLocation();
+    Position position = await userCurrentLocation().CurrentLocation();
   }
 
   displayContainer() {
@@ -397,12 +397,17 @@ class _DashboardState extends State<Dashboard>
   }
 
   serviceRequest() async {
-    handymanRequest.child(requestid.toString()).set({
+    handymanRequest
+        .child(
+      FirebaseAuth.instance.currentUser!.uid,
+    )
+        .set({
       "request": false,
-      "id": requestid.toString(),
+      "id": FirebaseAuth.instance.currentUser!.uid,
       "name": FirebaseAuth.instance.currentUser!.email,
       'service': widget.service,
-      'location': await location(context).CurrentLocation(),
+      'location': await userCurrentLocation().CurrentLocation(),
+      'time':DateTime.now().hour.toString()+':'+DateTime.now().minute.toString(),
     }).then((value) {
       displayMessage('Your request has been sending...', context);
     }).onError((error, stackTrace) {
@@ -410,3 +415,68 @@ class _DashboardState extends State<Dashboard>
     });
   }
 }
+/*
+Timer(Duration(seconds: 10), () async {
+
+                                 print("this is check bro $checkrequest ");
+                                  if (checkrequest == true) {
+                                    displayContainer();
+                                    AwesomeDialog(
+                                      context: context,
+                                      title: 'Congratulataion',
+                                      desc: "Fixer accpet your request ",
+                                      dialogType: DialogType.success,
+                                      btnOkText: 'Okay 😍 ',
+                                      btnOkOnPress: () {},
+                                    ).show();
+                                  } else  if (checkrequest ==false){
+                                    displayContainer();
+                                    AwesomeDialog(
+                                      context: context,
+                                      title: 'Opss',
+                                      desc: " No fixer is available right now",
+                                      dialogType: DialogType.error,
+                                      btnOkColor: Colors.red,
+                                      btnOkText: 'Okay 🙄 ',
+                                      btnOkOnPress: () {
+                                        handymanRequest
+                                            .child(requestid.toString())
+                                            .remove();
+                                      },
+                                    ).show();
+                                  }
+                                });
+
+
+
+                                Timer(Duration(seconds: 10), () async {
+                                  bool checkrequest = true;
+                                  print("this is check bro $checkrequest ");
+                                  if (checkrequest == true) {
+                                    displayContainer();
+                                    AwesomeDialog(
+                                      context: context,
+                                      title: 'Congratulataion',
+                                      desc: "Fixer accpet your request ",
+                                      dialogType: DialogType.success,
+                                      btnOkText: 'Okay 😍 ',
+                                      btnOkOnPress: () {},
+                                    ).show();
+                                  } else  if (checkrequest ==false){
+                                    displayContainer();
+                                    AwesomeDialog(
+                                      context: context,
+                                      title: 'Opss',
+                                      desc: " No fixer is available right now",
+                                      dialogType: DialogType.error,
+                                      btnOkColor: Colors.red,
+                                      btnOkText: 'Okay 🙄 ',
+                                      btnOkOnPress: () {
+                                        handymanRequest
+                                            .child(requestid.toString())
+                                            .remove();
+                                      },
+                                    ).show();
+                                  }
+                                });
+*/
